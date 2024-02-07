@@ -37,25 +37,25 @@
     font-size: 2rem;
 }
 
-.info p {
+.info p{
     font-size: 1.3rem;
 }
 
-.btn {
+.box {
     display: flex;
 }
 
-.btn * {
-    font-size: 1.3rem;
+.box * {
+    font-size: 1.1rem;
 }
 
-.btn p {
+.box p {
     border-top: 1px solid #333;
     border-bottom: 1px solid #333;
     padding: 0.2rem 1rem;
 }
 
-.btn button {
+.box button {
     cursor: pointer;
     padding: 0.2rem 0.5rem;
 }

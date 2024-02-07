@@ -1,14 +1,30 @@
 import { useContext } from 'react';
 import CartItem from '../../Components/CartItem/CartItem';
-import { CartItemsContext } from '../../Context/CartItemsContext';
+import { CartItemsContext, CartItemsDispatchContext } from '../../Context/CartItemsContext';
 import styles from './Cart.module.css';
 import ProductsContext from '../../Context/ProductsContext';
+import { useNavigate } from 'react-router-dom';
 
 const Cart = () => {
 
+  const navigate = useNavigate();
+
   const cartItems = useContext(CartItemsContext);
 
+  const cartItemsDispatch = useContext(CartItemsDispatchContext);
+
   const products = useContext(ProductsContext);
+
+  let totalPrice = 0;
+
+  for (let i in cartItems) {
+    totalPrice += products.find(product => product.id === +i).price * cartItems[i];
+  }
+
+  const handleClearClick = () => {
+    cartItemsDispatch({ type: 'clear' });
+    navigate('/');
+  }
 
   return (
     <div className={styles.cart}>
@@ -22,8 +38,12 @@ const Cart = () => {
       {
         Object.keys(cartItems).length
         &&
-        <p className='text-center'>Total Price: $</p>
+        <>
+          <p className='text-center'>Total: ${totalPrice}</p>
+          <button className={styles.clear} onClick={handleClearClick}>Clear Cart</button>
+        </>
       }
+      <button className={styles.backToShopping} onClick={() => navigate('/')}>Back To Shopping</button>
     </div>
   )
 }

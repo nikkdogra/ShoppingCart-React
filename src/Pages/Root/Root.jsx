@@ -12,16 +12,18 @@ const cartItemsReducer = (prevCartItems, action) => {
     }
 
     case 'remove': {
-      const newCartItems = {...prevCartItems,[action.id]: prevCartItems[action.id] - 1};
+      const newCartItems = { ...prevCartItems, [action.id]: prevCartItems[action.id] - 1 };
 
-      if(newCartItems[action.id] <= 0){
+      if (newCartItems[action.id] <= 0) {
         delete newCartItems[action.id];
       }
 
       return newCartItems;
     }
 
-    default: prevCartItems;
+    case 'clear': return {};
+
+    default: return prevCartItems;
   }
 }
 const Root = () => {
