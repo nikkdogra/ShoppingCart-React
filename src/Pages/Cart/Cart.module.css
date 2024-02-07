@@ -1,0 +1,16 @@
+.cart{
+    padding: 2rem 0;
+}
+.cart h2{
+    text-align: center;
+    font-size: 2.5rem;
+}
+.container{
+    width: 55%;
+    padding: 2rem 0;
+    margin: auto;
+}
+.cart p{
+    font-size: 2rem;
+    text-align: center;
+}

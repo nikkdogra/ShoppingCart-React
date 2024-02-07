@@ -1,0 +1,16 @@
+.navbar{
+    background-color: #000;
+    padding: 1rem 5rem;
+}
+.navbar ul{
+    list-style: none;
+    display: flex;
+    gap: 1rem;
+    justify-content: end;
+    align-items: center;
+}
+.link{
+    font-size: 1.3rem;
+    color: #fff;
+    text-decoration: none;
+}
