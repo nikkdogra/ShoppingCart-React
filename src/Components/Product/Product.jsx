@@ -1,22 +1,49 @@
 import { useContext } from 'react';
 import styles from './Product.module.css';
-import { CartItemsContext, CartItemsDispatchContext } from '../../Context/CartItemsContext';
+import { FaCartPlus } from "react-icons/fa";
+import { useNavigate } from 'react-router-dom';
+import { useDispatchCartItems } from '../../context/CartItemsContext';
+import SetPopUpVisibilityContext from '../../context/SetPopUpVisibilityContext';
+import ModeContext from '../../context/ModeContext';
 
-const Product = ({ id, src, title, price }) => {
-  const cartItems = useContext(CartItemsContext);
+const Product = ({ id, title, src, price, inCart }) => {
+  const navigate = useNavigate();
 
-  const cartItemsDispatch = useContext(CartItemsDispatchContext);
+  const mode = useContext(ModeContext);
 
-  const handleAddClick = () => {
-    cartItemsDispatch({type: 'add',id: id});
+  const dispatchCartItems = useDispatchCartItems();
+
+  const setPopUpVisibility = useContext(SetPopUpVisibilityContext);
+
+  const handleBtnClick = () => {
+    if (inCart) return;
+
+    setPopUpVisibility({ visible: true, id: id });
+    dispatchCartItems({ type: 'add', id: id });
   }
 
   return (
-    <div className={styles.product}>
-      <img src={src} alt="Product-Image" />
-      <h4>{title}</h4>
-      <p>${price}</p>
-      <button onClick={handleAddClick}>Add to Cart {cartItems[id] && `(${cartItems[id]})`}</button>
+    <div className={`${styles.product} rounded my-4 text-white bg-${mode === 'light' ? 'primary' : 'dark'}`}>
+
+      <div className={`${styles.img_box} position-relative`}>
+
+        <img src={src} alt="Product-Image" onClick={() => navigate(`/product/${id}`)} />
+
+        {
+          !inCart
+          &&
+          <button className={`${styles.btn} btn btn-${mode === 'light' ? 'info' : 'secondary'} position-absolute bottom-0 end-0`} onClick={handleBtnClick}>
+            <FaCartPlus />
+          </button>
+        }
+
+      </div>
+
+      <div className={`${styles.details_box} d-flex justify-content-between align-items-center px-2`}>
+        <h5>{title}</h5>
+        <p>${price}</p>
+      </div>
+
     </div>
   )
 }
