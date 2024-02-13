@@ -23,7 +23,7 @@ const Product = ({ id, title, src, price, inCart }) => {
   }
 
   return (
-    <div className={`${styles.product} rounded my-4 text-white bg-${mode === 'light' ? 'primary' : 'dark'}`}>
+    <div className={`${styles.product} rounded m-2 text-white bg-${mode === 'light' ? 'primary' : 'dark'}`}>
 
       <div className={`${styles.img_box} position-relative`}>
 

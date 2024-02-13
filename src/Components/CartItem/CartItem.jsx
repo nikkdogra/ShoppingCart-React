@@ -21,18 +21,20 @@ const CartItem = ({ id, src, title, price, count }) => {
         <div className="col-12 col-md-5 mt-3 text-center text-xl-start">
           <h3>{title}</h3>
 
-          <p className='my-2 my-md-3 fs-4'>${price}</p>
+          <p className='my-2 my-md-3 fs-4 fw-bolder'>${price}</p>
 
-          <button className={`btn btn-${mode === 'light' ? 'danger' : 'light'} fw-bolder`} onClick={() => dispatchCartItems({ type: 'remove', id: id })}>-</button>
+          <div className='d-flex align-items-center'>
+            <button className={`${styles.btn} btn btn-${mode === 'light' ? 'primary' : 'light'} btn-sm fw-bolder fs-5`} onClick={() => dispatchCartItems({ type: 'remove', id: id })}>-</button>
 
-          <span className='bg-primary text-light py-2 px-3 rounded'>{count}</span>
+            <p className='bg-secondary text-light mt-3 py-2 px-3'>{count}</p>
 
-          <button className={`btn btn-${mode === 'light' ? 'danger' : 'light'} fw-bolder`} onClick={() => dispatchCartItems({ type: 'add', id: id })}>+</button>
+            <button className={`${styles.btn} btn btn-${mode === 'light' ? 'primary' : 'light'} btn-sm fw-bolder fs-5`} onClick={() => dispatchCartItems({ type: 'add', id: id })}>+</button>
+          </div>
 
           {
             count > 1
             &&
-            <p className='my-2 my-md-3 fs-4'>${price * count}</p>
+            <p className='my-2 my-md-3 fs-4'>Item Total: ${price * count}</p>
           }
 
         </div>

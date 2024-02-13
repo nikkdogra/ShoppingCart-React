@@ -19,7 +19,7 @@ const PopUp = ({ product }) => {
     }
 
     return (
-        <div className={`${styles.pop_up} d-flex flex-column justify-content-evenly align-items-center bg-${mode === 'light' ? 'primary' : 'secondary'} text-white p-5 text-center rounded`}>
+        <div className={`${styles.pop_up} d-flex flex-column justify-content-evenly align-items-center bg-${mode === 'light' ? 'info' : 'secondary'} text-white p-5 text-center rounded`}>
 
             <h3>Item Added To The Cart</h3>
 

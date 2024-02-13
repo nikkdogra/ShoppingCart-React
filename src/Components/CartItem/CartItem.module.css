@@ -2,3 +2,6 @@
     height: 250px;
     width: 100%;
 }
+.btn{
+   border-radius: 0; 
+}

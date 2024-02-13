@@ -19,18 +19,43 @@ const App = () => {
   const [mode, setMode] = useState('light');
 
   const fetchProducts = async () => {
-    const response = await fetch('https://dummyjson.com/products');
-    const data = await response.json();
-    setProducts(data.products);
+    try {
+      const response = await fetch(`https://dummyjson.com/products?limit=10&skip=${products.length}`);
+      const data = await response.json();
+      setProducts([...products, ...data.products]);
+    }
+    catch (error) {
+      console.log(error);
+    }
   }
 
-  document.body.style.pointerEvents = popUpVisibility.visible ? 'none' : 'auto';
+  const handleWindowScroll = () => {
+    const windowHeight = window.innerHeight;
+    const scrollTop = document.documentElement.scrollTop;
+    const scrollHeight = document.documentElement.scrollHeight;
 
-  useEffect(() => {
-    if (!products.lenth) {
+    if (windowHeight + scrollTop === scrollHeight && products.length < 100) {
+      console.log('here');
       fetchProducts();
     }
+  }
+
+  useEffect(() => {
+    document.body.style.pointerEvents = popUpVisibility.visible ? 'none' : 'auto';
+  }, [popUpVisibility]);
+
+  useEffect(() => {
+    fetchProducts();
   }, []);
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleWindowScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleWindowScroll);
+    }
+
+  }, [products]);
 
   return (
     <ModeContext.Provider value={mode}>
@@ -45,7 +70,7 @@ const App = () => {
           <PopUp product={products.find(product => product.id == popUpVisibility.id)} />
         }
 
-        <Navbar onToggleMode={() => setMode(mode === 'light' ? 'dark' : 'light')}/>
+        <Navbar onToggleMode={() => setMode(mode === 'light' ? 'dark' : 'light')} />
 
         <div className={`page-height ${mode === 'light' ? 'bg-white text-primary' : 'bg-black text-white'} py-5`}>
 
