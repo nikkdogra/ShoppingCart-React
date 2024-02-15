@@ -1,14 +1,25 @@
 import { Link, useLocation } from 'react-router-dom';
-import styles from './Navbar.module.css';
 import { MdLightMode } from "react-icons/md";
 import { MdDarkMode } from "react-icons/md";
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import ModeContext from '../../context/ModeContext';
+import { useProducts } from '../../context/ProductsContext';
+import { useSearch } from '../../context/SearchContext';
 
 const Navbar = ({ onToggleMode }) => {
   const mode = useContext(ModeContext);
+
   const location = useLocation().pathname;
-  const [search, setSearch] = useState('');
+
+  const { search, setSearch } = useSearch();
+
+  const { searchProducts } = useProducts();
+
+  const handleChange = (e) => {
+    setSearch(e.target.value);
+    searchProducts(e.target.value);
+  }
+
   return (
     <nav className={`navbar navbar-expand-lg bg-${mode === 'light' ? 'primary' : 'body-tertiary'} position-sticky top-0 z-1`} data-bs-theme={mode}>
 
@@ -33,20 +44,17 @@ const Navbar = ({ onToggleMode }) => {
             {
               location === '/'
               &&
-              <form className="d-flex" role="search">
-                <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" value={search} onChange={(e) => setSearch(e.target.value)} />
-                <button className="btn btn-outline-light" type="submit">Search</button>
-              </form>
+              <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" value={search} onChange={handleChange} />
             }
 
-            <div className='d-flex gap-2'>
-              <p className='text-white d-block d-lg-none pt-1'>{mode} Mode</p>
+            <div className='d-flex gap-2' style={{ cursor: "pointer" }} onClick={onToggleMode}>
+              <p className='text-white d-block d-lg-none pt-1'>{mode.charAt(0).toUpperCase() + mode.slice(1).toLowerCase()} Mode</p>
               {
                 mode === 'light'
                   ?
-                  <MdLightMode className={`text-light fs-1 ${styles.mode}`} onClick={onToggleMode} />
+                  <MdLightMode className="text-light fs-1" />
                   :
-                  <MdDarkMode className={`text-light fs-1 ${styles.mode}`} onClick={onToggleMode} />
+                  <MdDarkMode className="text-light fs-1" />
               }
             </div>
           </div>

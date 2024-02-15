@@ -3,8 +3,8 @@ import styles from './Product.module.css';
 import { FaCartPlus } from "react-icons/fa";
 import { useNavigate } from 'react-router-dom';
 import { useDispatchCartItems } from '../../context/CartItemsContext';
-import SetPopUpVisibilityContext from '../../context/SetPopUpVisibilityContext';
 import ModeContext from '../../context/ModeContext';
+import { useDispatchPopUp } from '../../context/PopUpContext';
 
 const Product = ({ id, title, src, price, inCart }) => {
   const navigate = useNavigate();
@@ -13,12 +13,11 @@ const Product = ({ id, title, src, price, inCart }) => {
 
   const dispatchCartItems = useDispatchCartItems();
 
-  const setPopUpVisibility = useContext(SetPopUpVisibilityContext);
+  const dispatchPopUp = useDispatchPopUp();
 
   const handleBtnClick = () => {
     if (inCart) return;
-
-    setPopUpVisibility({ visible: true, id: id });
+    dispatchPopUp({ type: 'show', id: id });
     dispatchCartItems({ type: 'add', id: id });
   }
 
