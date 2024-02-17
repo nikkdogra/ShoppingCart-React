@@ -11,7 +11,8 @@ const Cart = () => {
   const countSubTotal = () => {
     let total = 0;
     cartItems.forEach(item => {
-      total += item.price * item.count;
+      const discount = Math.floor(item.price * (item.discountPercentage / 100));
+      total += Math.floor(item.price - discount) * item.count;
     });
     return total;
   }
@@ -33,6 +34,7 @@ const Cart = () => {
             src={item.thumbnail}
             title={item.title}
             price={item.price}
+            discount={Math.floor(item.price * (item.discountPercentage / 100))}
             count={item.count}
           />)
         }

@@ -3,11 +3,13 @@ import { useDispatchCartItems } from '../../context/CartItemsContext';
 import styles from './CartItem.module.css';
 import ModeContext from '../../context/ModeContext';
 
-const CartItem = ({ id, src, title, price, count }) => {
+const CartItem = ({ id, src, title, price, discount, count }) => {
 
   const dispatchCartItems = useDispatchCartItems();
 
   const mode = useContext(ModeContext);
+
+  const discountedPrice = Math.floor(price - discount);
 
   return (
     <div className="mx-auto my-5 rounded p-3" style={{ boxShadow: `0 0 5px ${mode === 'light' ? 'blue' : 'azure'}` }}>
@@ -23,6 +25,10 @@ const CartItem = ({ id, src, title, price, count }) => {
 
           <p className='my-2 my-md-3 fs-4 fw-bolder'>${price}</p>
 
+          <p>Discount: ${discount}</p>
+
+          <p className='fs-5'>Discounted Price: ${discountedPrice}</p>
+
           <div className='d-flex justify-content-center justify-content-md-start align-items-center'>
             <button className={`${styles.btn} btn btn-${mode === 'light' ? 'primary' : 'light'} btn-sm fw-bolder fs-5`} onClick={() => dispatchCartItems({ type: 'remove', id: id })}>-</button>
 
@@ -34,7 +40,7 @@ const CartItem = ({ id, src, title, price, count }) => {
           {
             count > 1
             &&
-            <p className='my-2 my-md-3 fs-4'>Item Total: ${price * count}</p>
+            <p className='my-2 my-md-3 fs-4'>Item Total: ${discountedPrice * count}</p>
           }
 
         </div>

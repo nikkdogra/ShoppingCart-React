@@ -13,7 +13,9 @@ const Home = () => {
 
     const { error } = useError();
 
-    const {search} = useSearch();
+    const { search } = useSearch();
+
+    const showSpinner = products.length < 100 && !search || !products.length;
 
     const handleScroll = () => {
         const windowHeight = window.innerHeight;
@@ -52,9 +54,7 @@ const Home = () => {
                     ?
                     <p className='mt-3 fs-3 fw-bold text-danger text-center'>{error}</p>
                     :
-                    products.length < 100
-                    &&
-                    !search
+                    showSpinner
                     &&
                     <Spinner />
             }

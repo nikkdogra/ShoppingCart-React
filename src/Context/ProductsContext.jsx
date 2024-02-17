@@ -15,7 +15,7 @@ const ProductsProvider = ({ children }) => {
             const response = await fetch(`https://dummyjson.com/products?limit=10&skip=${products.length}`);
 
             if (!response.ok) {
-                showError('Check Your Internet Connection!');
+                showError('Some Error Occurred! Try Later');
                 return;
             }
 
@@ -24,12 +24,14 @@ const ProductsProvider = ({ children }) => {
             setProducts([...products, ...data.products]);
         }
         catch (e) {
-            showError('Some Error Occurred! Try Later');
+            showError('Check Your Internet Connection!');
         }
     }
 
     const searchProducts = async (search) => {
         removeError();
+
+        setProducts([]);
 
         const url = 'https://dummyjson.com/products' + (search ? `/search?q=${search}` : '?limit=10');
 
@@ -47,6 +49,7 @@ const ProductsProvider = ({ children }) => {
     useEffect(() => {
         fetchProducts();
     }, []);
+
     return (
         <ProductsContext.Provider value={{ products, fetchProducts, searchProducts }}>
             {children}
