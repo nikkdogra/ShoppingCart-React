@@ -5,6 +5,7 @@ import { useContext } from 'react';
 import ModeContext from '../../context/ModeContext';
 import { useProducts } from '../../context/ProductsContext';
 import { useSearch } from '../../context/SearchContext';
+import { useCartItems } from '../../context/CartItemsContext';
 
 const Navbar = ({ onToggleMode }) => {
   const mode = useContext(ModeContext);
@@ -14,6 +15,14 @@ const Navbar = ({ onToggleMode }) => {
   const { search, setSearch } = useSearch();
 
   const { searchProducts } = useProducts();
+
+  const cartItems = useCartItems();
+
+  let totalItems = 0;
+
+  cartItems.forEach((item) => {
+    totalItems += item.count;
+  })
 
   const handleChange = (e) => {
     setSearch(e.target.value);
@@ -36,8 +45,11 @@ const Navbar = ({ onToggleMode }) => {
             <li className="nav-item">
               <NavLink to='/' className={({ isActive }) => `nav-link text-white ${isActive && 'fw-bolder'}`} aria-current="page">Home</NavLink>
             </li>
-            <li className="nav-item">
+            <li className="nav-item position-relative">
               <NavLink to='/cart' className={({ isActive }) => `nav-link text-white ${isActive && 'fw-bolder'}`}>Cart</NavLink>
+              <span className="position-absolute start-100 translate-middle badge rounded-pill bg-danger" style={{top: '15%'}}>
+                {totalItems > 0 && totalItems}
+              </span>
             </li>
           </ul>
           <div className='d-flex flex-column-reverse flex-lg-row gap-lg-3'>

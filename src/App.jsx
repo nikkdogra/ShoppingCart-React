@@ -26,21 +26,21 @@ const App = () => {
 
             <PopUpProvider>
 
-              <Navbar onToggleMode={() => setMode(mode === 'light' ? 'dark' : 'light')} />
+              <CartItemsProvider>
 
-              <div className={`page-height ${mode === 'light' ? 'bg-white text-primary' : 'bg-black text-white'} py-5`}>
+                <Navbar onToggleMode={() => setMode(mode === 'light' ? 'dark' : 'light')} />
 
-                <div className="container">
+                <div className={`page-height ${mode === 'light' ? 'bg-white text-primary' : 'bg-black text-white'} py-5`}>
 
-                  <CartItemsProvider>
+                  <div className="container">
 
                     <Outlet />
 
-                  </CartItemsProvider>
+                  </div>
 
                 </div>
 
-              </div>
+              </CartItemsProvider>
 
             </PopUpProvider>
 

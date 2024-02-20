@@ -23,11 +23,13 @@ const CartItem = ({ id, src, title, price, discount, count }) => {
         <div className="col-12 col-md-5 mt-3 text-center text-md-start">
           <h3>{title}</h3>
 
-          <p className='my-2 my-md-3 fs-4 fw-bolder'>${price}</p>
+          <p className='my-2 my-md-3 fs-4 fw-bolder'>Price: ${price}</p>
 
-          <p>Discount: ${discount}</p>
+          <p>{discount === 0 ? 'No Discount' : `Discount: $${discount}`}</p>
 
-          <p className='fs-5'>Discounted Price: ${discountedPrice}</p>
+          {
+            discount > 0 && <p className='fs-5'>Discounted Price: ${discountedPrice}</p>
+          }
 
           <div className='d-flex justify-content-center justify-content-md-start align-items-center'>
             <button className={`${styles.btn} btn btn-${mode === 'light' ? 'primary' : 'light'} btn-sm fw-bolder fs-5`} onClick={() => dispatchCartItems({ type: 'remove', id: id })}>-</button>
